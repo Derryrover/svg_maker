@@ -1,13 +1,15 @@
-module SvgTreeBuilder exposing (result, createSvgRoseTree)
+module SvgTreeBuilder exposing (Model, result, createSvgRoseTree)
 
 import RoseTree exposing (RoseTree, singleton, addChildren)
 import IdWrapper exposing (IdWrapper, Id, map)
 import SvgElement
 
-createSvgRoseTree : Int -> Int -> Int -> RoseTree (IdWrapper SvgElement.Model)
+type alias Model = RoseTree (IdWrapper SvgElement.Model)
+
+createSvgRoseTree : Int -> Int -> Int -> Model
 createSvgRoseTree id x y = RoseTree.singleton (IdWrapper.Wrapper id (SvgElement.create x y))
 
-createDummieSvgRoseTree : Int -> RoseTree (IdWrapper SvgElement.Model)
+createDummieSvgRoseTree : Int -> Model
 createDummieSvgRoseTree id = createSvgRoseTree id 1 1
 
 tree1  = createDummieSvgRoseTree 1

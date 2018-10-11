@@ -1,4 +1,4 @@
-module RoseTree exposing (RoseTree, singleton, addChildren, updateRose, map, findAndUpdate)
+module RoseTree exposing (RoseTree, singleton, root, children, addChildren, updateRose, map, findAndUpdate)
 
 -- core
 import List exposing(map, foldr)

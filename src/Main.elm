@@ -8,10 +8,12 @@ import Browser exposing(element)
 import RoseTree
 import IdWrapper
 import SvgElement
-import SvgTreeBuilder exposing(result)
+import SvgTreeBuilder
+import SvgDisplay
 
 type alias Model = 
-  { svgElement : SvgElement.Model}
+  { svgElement : SvgElement.Model
+  , svgRoseTree : SvgTreeBuilder.Model }
 
 type Msg 
   = SvgElementMsg SvgElement.Msg 
@@ -33,13 +35,18 @@ init _ =
   let
     (svgElementModel , svgElementMsg) = SvgElement.init 1 1
   in
-    ({ svgElement = svgElementModel }, Cmd.batch [Cmd.map SvgElementMsg svgElementMsg])
+    ( { svgElement = svgElementModel 
+      , svgRoseTree = SvgTreeBuilder.result
+      }
+    , Cmd.batch [Cmd.map SvgElementMsg svgElementMsg]
+    )
 
 view : Model -> Html Msg
 view model =
   div [] 
     [ text "Hello World"
-    , Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
+    , Html.map SvgElementMsg (SvgElement.view  model.svgElement) 
+    , SvgDisplay.view model.svgRoseTree]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
