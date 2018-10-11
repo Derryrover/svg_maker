@@ -1,9 +1,9 @@
-module IdWrapper exposing (..)
+module IdWrapper exposing (IdWrapper(..), Id, map)
 
-type Wrapper a = Wrapper Id a
+type IdWrapper a = Wrapper Id a
 
 type alias Id = Int
 
-map: (a -> b) -> Wrapper a -> Wrapper b
+map: (a -> b) -> IdWrapper a -> IdWrapper b
 map f (Wrapper id item) = Wrapper id (f item)
 

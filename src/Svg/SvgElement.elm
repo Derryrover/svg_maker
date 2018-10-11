@@ -1,4 +1,4 @@
-module SvgElement exposing(Model, Msg, init, update, view)
+module SvgElement exposing(Model, Msg, init, update, view, create)
 
 -- core
 import Html exposing (Html, input, div)
@@ -19,8 +19,11 @@ type Msg
   | Y Int 
   | Noop
 
+create : Int -> Int -> Model
+create x y = { x = x, y = y }
+
 init : Int -> Int -> (Model, Cmd Msg)
-init x y = ({ x = x, y = y }, Cmd.none)
+init x y = (create x y, Cmd.none)
 
 view : Model -> Html Msg
 view model =
@@ -56,14 +59,3 @@ toMsg preMsg str =
         Noop
       Ok int ->
         preMsg int
-
-toMsgY : String -> Msg
-toMsgY str =
-  let 
-    res = parseInt str
-  in 
-    case res of
-      Err _ ->
-        Y 1
-      Ok y ->
-        Y y

@@ -8,6 +8,7 @@ import Browser exposing(element)
 import RoseTree
 import IdWrapper
 import SvgElement
+import SvgTreeBuilder exposing(result)
 
 type alias Model = 
   { svgElement : SvgElement.Model}
