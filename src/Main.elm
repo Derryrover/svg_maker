@@ -2,6 +2,7 @@ module Main exposing (..)
 
 -- core
 import Html exposing (Html, div, text)
+import Html.Attributes exposing (style)
 import Browser exposing(element)
 
 -- self made modules
@@ -10,6 +11,7 @@ import IdWrapper
 import SvgElement
 import SvgTreeBuilder
 import SvgDisplay
+import ElmStyle
 
 type alias Model = 
   { svgElement : SvgElement.Model
@@ -42,11 +44,17 @@ init _ =
     )
 
 view : Model -> Html Msg
-view model =
+view model = 
   div [] 
-    [ text "Hello World"
-    , Html.map SvgElementMsg (SvgElement.view  model.svgElement) 
-    , SvgDisplay.view model.svgRoseTree]
+    [ div (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block")])
+        [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
+    , div (ElmStyle.createStyleList [("float" , "left")]) [SvgDisplay.view model.svgRoseTree]
+  ]
+-- view model =
+--   div [] 
+--     [ text "Hello World"
+--     , Html.map SvgElementMsg (SvgElement.view  model.svgElement) 
+--     , SvgDisplay.view model.svgRoseTree]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
