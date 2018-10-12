@@ -21,10 +21,6 @@ type Msg
   = SvgElementMsg SvgElement.Msg 
   | Noop
 
--- main = 
---   div [] 
---     [ text "Hello World" ]
-
 main = Browser.element
   { init = init
   , view = view
@@ -50,11 +46,6 @@ view model =
         [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
     , div (ElmStyle.createStyleList [("float" , "left")]) [SvgDisplay.view model.svgRoseTree]
   ]
--- view model =
---   div [] 
---     [ text "Hello World"
---     , Html.map SvgElementMsg (SvgElement.view  model.svgElement) 
---     , SvgDisplay.view model.svgRoseTree]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
