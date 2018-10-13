@@ -10,16 +10,13 @@ import IdRoseTree
 import SvgElement
 import IdRoseTreeDisplay
 
-update : (SvgElement.Msg -> SvgElement.Model -> (SvgElement.Model, Cmd SvgElement.Msg))
-  -> IdRoseTree.Model SvgElement.Model 
-  -> IdRoseTreeDisplay.Msg SvgElement.Msg SvgElement.Model 
-  -> ( IdRoseTree.Model SvgElement.Model
-     ,  Cmd (IdRoseTreeDisplay.Msg SvgElement.Msg SvgElement.Model)
-     )
+update : (aMsg -> aModel -> (aModel, Cmd aMsg))
+  -> IdRoseTree.Model aModel 
+  -> IdRoseTreeDisplay.Msg aMsg aModel 
+  -> ( IdRoseTree.Model aModel,  Cmd (IdRoseTreeDisplay.Msg aMsg aModel))
 update itemUpdateFunc model msg = 
   case msg of
     IdRoseTreeDisplay.Direction id itemMsg ->
-      --(model, Cmd.none)
       let (res, cmd) = updateHelperRoseTree itemUpdateFunc model id itemMsg
       in (res, Cmd.map (IdRoseTreeDisplay.Direction id) cmd)
     IdRoseTreeDisplay.New id ->
@@ -27,18 +24,18 @@ update itemUpdateFunc model msg =
     IdRoseTreeDisplay.CreatedRandom idParent newId ->
       (model, Cmd.none)
 
-updateHelperRoseTree :  (SvgElement.Msg -> SvgElement.Model -> (SvgElement.Model, Cmd SvgElement.Msg)) 
-  -> IdRoseTree.Model SvgElement.Model 
-  -> IdWrapper.Id -> SvgElement.Msg 
-  -> ( IdRoseTree.Model SvgElement.Model, Cmd SvgElement.Msg)
+updateHelperRoseTree :  (aMsg -> aModel -> (aModel, Cmd aMsg)) 
+  -> IdRoseTree.Model aModel 
+  -> IdWrapper.Id 
+  -> aMsg 
+  -> ( IdRoseTree.Model aModel, Cmd aMsg)
 updateHelperRoseTree itemUpdateFunc tree id msg = 
   let 
     testFunc = (\testTree -> (IdWrapper.getId (RoseTree.root testTree))==id)
-    updateFunc = createUpdateHelperTreeItemWithoutId (\svgElementModel -> let (res,cmd) = itemUpdateFunc msg svgElementModel in res ) -- discard command for now :( HELP!!
+    updateFunc = createUpdateHelperTreeItemWithoutId (\itemModel -> let (res,cmd) = itemUpdateFunc msg itemModel in res ) -- discard command for now :( HELP!!
   in 
     (RoseTree.findAndUpdate testFunc updateFunc tree, Cmd.none)
 
---createUpdateHelperTreeItemWithoutId : (SvgElement.Model-> SvgElement.Model) -> (IdRoseTree.Model SvgElement.Model -> IdRoseTree.Model SvgElement.Model)
 createUpdateHelperTreeItemWithoutId : (aModel -> aModel) -> (IdRoseTree.Model aModel -> IdRoseTree.Model aModel)
 createUpdateHelperTreeItemWithoutId func =
   (\tree ->
