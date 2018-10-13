@@ -12,6 +12,7 @@ import SvgElement
 import SvgTreeBuilder
 import SvgDisplay
 import ElmStyle
+import IdRoseTreeDisplay
 
 type alias Model = 
   { svgElement : SvgElement.Model
@@ -19,6 +20,7 @@ type alias Model =
 
 type Msg 
   = SvgElementMsg SvgElement.Msg 
+  | IdRoseTreeDisplayMsg (IdRoseTreeDisplay.Msg SvgElement.Msg SvgElement.Model )
   | Noop
 
 main = Browser.element
@@ -41,11 +43,14 @@ init _ =
 
 view : Model -> Html Msg
 view model = 
-  div [] 
-    [ div (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block")])
+  div 
+    [] 
+    [ div 
+        (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block")] )
         [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
     , div (ElmStyle.createStyleList [("float" , "left")]) [SvgDisplay.view model.svgRoseTree]
-  ]
+    , Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree)
+    ]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
@@ -55,6 +60,8 @@ update msg model =
         (svgElementModel , svgElementMsgOut) = SvgElement.update svgElementMsgIn model.svgElement
       in
         ({ model | svgElement = svgElementModel }, Cmd.map SvgElementMsg svgElementMsgOut)
+    IdRoseTreeDisplayMsg _ ->
+      (model, Cmd.none)
     Noop ->
       (model, Cmd.none)
 
