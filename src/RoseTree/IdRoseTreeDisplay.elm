@@ -1,4 +1,4 @@
-module IdRoseTreeDisplay exposing (view, Msg)
+module IdRoseTreeDisplay exposing (view, Msg(..))
 
 -- self made modules
 import RoseTree

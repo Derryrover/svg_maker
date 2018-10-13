@@ -6,13 +6,15 @@ import Html.Attributes exposing (style)
 import Browser exposing(element)
 
 -- self made modules
+import ElmStyle
+
 import RoseTree
 import IdWrapper
 import SvgElement
 import SvgTreeBuilder
 import SvgDisplay
-import ElmStyle
 import IdRoseTreeDisplay
+import IdRoseTreeUpdate
 
 type alias Model = 
   { svgElement : SvgElement.Model
@@ -47,9 +49,10 @@ view model =
     [] 
     [ div 
         (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block")] )
-        [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
+        --[ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
+        [ Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree) ]
     , div (ElmStyle.createStyleList [("float" , "left")]) [SvgDisplay.view model.svgRoseTree]
-    , Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree)
+    --, Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree)
     ]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -60,8 +63,10 @@ update msg model =
         (svgElementModel , svgElementMsgOut) = SvgElement.update svgElementMsgIn model.svgElement
       in
         ({ model | svgElement = svgElementModel }, Cmd.map SvgElementMsg svgElementMsgOut)
-    IdRoseTreeDisplayMsg _ ->
-      (model, Cmd.none)
+    IdRoseTreeDisplayMsg idRoseTreeDisplayMsg ->
+      --(model, Cmd.none)
+      let (res, cmd) = IdRoseTreeUpdate.update model.svgRoseTree idRoseTreeDisplayMsg
+      in ({model | svgRoseTree = res}, Cmd.map IdRoseTreeDisplayMsg cmd)
     Noop ->
       (model, Cmd.none)
 
