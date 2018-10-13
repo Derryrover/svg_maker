@@ -39,7 +39,7 @@ view itemViewFunction treeModel =
       [ div 
           [ class "svg_circle_input_whole_item" ] 
           [ Html.map (Direction rootId) (itemViewFunction rootItem) ]
-      , selectBuilder rootId 
+      --, selectBuilder rootId 
       , ul [] (List.map (view itemViewFunction) children)
       ]
 
