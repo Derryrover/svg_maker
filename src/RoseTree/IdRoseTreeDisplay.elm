@@ -3,9 +3,11 @@ module IdRoseTreeDisplay exposing (view, Msg(..))
 -- self made modules
 import IdWrapper
 import IdRoseTree
-
--- core
+import ElmStyle
+-- packages
 import Tree
+-- core
+import Basics exposing (..)
 import List exposing(map)
 import Maybe exposing(..)
 import Html exposing (Html, ul, li, div, text, node, button, select, option)
@@ -17,10 +19,8 @@ type Msg aMsg aModel
   | New IdWrapper.Id --id parent
   | CreatedRandom IdWrapper.Id IdWrapper.Id -- id-parent new-id
 
-init tree = {tree=tree, idHideSelect = Nothing}
-
-view : ( aModel -> Html aMsg) -> IdRoseTree.Model aModel -> Html (Msg aMsg aModel)
-view itemViewFunction treeModel = 
+view : ( aModel -> Html aMsg) -> Int -> IdRoseTree.Model aModel -> Html (Msg aMsg aModel)
+view itemViewFunction depthCounter treeModel = 
   let
     rootWithId = Tree.label treeModel
     rootId = IdWrapper.getId rootWithId
@@ -28,13 +28,34 @@ view itemViewFunction treeModel =
     children = Tree.children treeModel
   in
     li 
-      []
+      (List.concat [listItemStyleList, [class (oddEvenClass depthCounter)]])
       [ div 
           [ class "svg_circle_input_whole_item" ] 
           [ Html.map (Direction rootId) (itemViewFunction rootItem) ]
       --, selectBuilder rootId 
-      , ul [] (List.map (view itemViewFunction) children)
+      , ul [] (List.map (view itemViewFunction (depthCounter+1)) children)
       ]
+
+isEven : Int -> Bool
+isEven int = modBy 2 int == 0
+
+oddEvenClass : Int -> String
+oddEvenClass int = 
+  if isEven int then
+    "class_even"
+  else 
+    "class_odd"
+
+listItemStyleList = ElmStyle.createStyleList 
+  [ ("list-style-type", "none") -- no bullets
+  , ("-webkit-margin-before", "0px") -- space above first bullet ? not working ?
+  , ("-webkit-margin-after", "0px") -- space below lst bullet ? not working ?
+  ]
+
+-- -- /*space above first bullet*/
+--     -webkit-margin-before: 0px;
+--     /*space below lst bullet*/
+--     -webkit-margin-after: 0px;
 
 
 -- selectItems = [ "circle", "rect", "ellipse", "line", "polyline", "polygon", "path"]

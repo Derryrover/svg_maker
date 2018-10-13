@@ -48,14 +48,14 @@ view model =
     [] 
     [ div -- tree view
         (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block")] )
-        [ Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree) ]
+        [ Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) 1 model.svgRoseTree) ]
     , div --svg view
       (ElmStyle.createStyleList [("float" , "left")]) 
       [SvgDisplay.view model.svgRoseTree]
-    , div -- view of single svg element just to show how message passing with Cmd.batch can be done in code (see init). 
-      -- This can be removed but then also remove message and model parts
-        []
-        [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
+    -- , div -- view of single svg element just to show how message passing with Cmd.batch can be done in code (see init). 
+    --   -- This can be removed but then also remove message and model parts
+    --     []
+    --     [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
     ]
 
 update : Msg -> Model -> ( Model, Cmd Msg )

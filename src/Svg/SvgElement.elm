@@ -1,7 +1,7 @@
 module SvgElement exposing(Model, Msg, init, update, view, create)
 
 -- core
-import Html exposing (Html, input, div)
+import Html exposing (Html, div, label, text, input)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 -- packages
@@ -29,16 +29,22 @@ init x y = (create x y, Cmd.none)
 view : Model -> Html Msg
 view model =
   div [] 
-    [ input
-      [ value (String.fromInt model.x)
-      , onInput (toMsg X) 
-      , class "svg_input_general"
-      ] []
-    , input
-      [ value (String.fromInt model.y)
-      , onInput (toMsg Y) 
-      , class "svg_input_general"
-      ] []
+    [ div []
+      [ label [] [text "X →"] 
+      , input
+        [ value (String.fromInt model.x)
+        , onInput (toMsg X) 
+        , class "svg_input_general"
+        ] []
+      ]
+    , div [] 
+      [ label [] [text "Y ↓"]
+      , input
+        [ value (String.fromInt model.y)
+        , onInput (toMsg Y) 
+        , class "svg_input_general"
+        ] []
+      ]
     ]
 
 update : Msg -> Model -> (Model, Cmd Msg)
