@@ -4,7 +4,6 @@ module IdRoseTreeUpdate exposing (..)
 import List
 
 -- selfmade packages
---import RoseTree
 import Tree
 import Tree.Zipper
 import IdWrapper
@@ -21,9 +20,9 @@ update itemUpdateFunc msg model =
     IdRoseTreeDisplay.Direction id itemMsg ->
       let (res, cmd) = updateHelperRoseTree itemUpdateFunc id itemMsg model  
       in (res, Cmd.map (IdRoseTreeDisplay.Direction id) cmd)
-    IdRoseTreeDisplay.New id ->
+    IdRoseTreeDisplay.New id -> --todo
       (model, Cmd.none)
-    IdRoseTreeDisplay.CreatedRandom idParent newId ->
+    IdRoseTreeDisplay.CreatedRandom idParent newId -> --todo
       (model, Cmd.none)
 
 updateHelperRoseTree :  (aMsg -> aModel -> (aModel, Cmd aMsg)) 
@@ -34,11 +33,9 @@ updateHelperRoseTree :  (aMsg -> aModel -> (aModel, Cmd aMsg))
 updateHelperRoseTree itemUpdateFunc id msg tree = 
   let 
     testFunc = (\idItem -> (IdWrapper.getId idItem) == id)
-    --updateFunc = createUpdateHelperTreeItemWithoutId (\itemModel -> let (res,cmd) = itemUpdateFunc msg itemModel in res ) -- discard command for now :( HELP!!
     zipper = Tree.Zipper.fromTree tree
     maybeZipperOnTarget = Tree.Zipper.findFromRoot testFunc zipper
   in 
-    --(RoseTree.findAndUpdate testFunc updateFunc tree, Cmd.none)
     case maybeZipperOnTarget of
       Nothing ->
         (tree, Cmd.none)
@@ -53,20 +50,6 @@ updateHelperRoseTree itemUpdateFunc id msg tree =
         in
           (updatedTree, cmd)
         
-
-
--- createUpdateHelperTreeItemWithoutId : (aModel -> aModel) -> (IdRoseTree.Model aModel -> IdRoseTree.Model aModel)
--- createUpdateHelperTreeItemWithoutId func =
---   (\tree ->
---     let
---       children = Tree.children tree
---       itemWithId = Tree.label tree
---       id = IdWrapper.getId itemWithId
---       item = IdWrapper.getItem itemWithId
---       updatedItem = func item
---     in
---       Tree.tree (IdWrapper.Wrapper id updatedItem) children
---   )
 
 
   

@@ -8,7 +8,6 @@ import Browser exposing(element)
 -- self made modules
 import ElmStyle
 
---import RoseTree
 import IdWrapper
 import SvgElement
 import SvgTreeBuilder
@@ -47,12 +46,16 @@ view : Model -> Html Msg
 view model = 
   div 
     [] 
-    [ div 
+    [ div -- tree view
         (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block")] )
-        --[ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
         [ Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree) ]
-    , div (ElmStyle.createStyleList [("float" , "left")]) [SvgDisplay.view model.svgRoseTree]
-    --, Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) model.svgRoseTree)
+    , div --svg view
+      (ElmStyle.createStyleList [("float" , "left")]) 
+      [SvgDisplay.view model.svgRoseTree]
+    , div -- view of single svg element just to show how message passing with Cmd.batch can be done in code (see init). 
+      -- This can be removed but then also remove message and model parts
+        []
+        [ Html.map SvgElementMsg (SvgElement.view  model.svgElement) ]
     ]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -64,7 +67,6 @@ update msg model =
       in
         ({ model | svgElement = svgElementModel }, Cmd.map SvgElementMsg svgElementMsgOut)
     IdRoseTreeDisplayMsg idRoseTreeDisplayMsg ->
-      --(model, Cmd.none)
       let (res, cmd) = IdRoseTreeUpdate.update SvgElement.update idRoseTreeDisplayMsg model.svgRoseTree
       in ({model | svgRoseTree = res}, Cmd.map IdRoseTreeDisplayMsg cmd)
     Noop ->

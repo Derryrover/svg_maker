@@ -36,7 +36,7 @@ view model =
       ] []
     , input
       [ value (String.fromInt model.y)
-      , onInput (toMsg Y) --(\y -> Y 10)
+      , onInput (toMsg Y) 
       , class "svg_input_general"
       ] []
     ]

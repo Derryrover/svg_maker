@@ -20,7 +20,9 @@ drawLayer tree =
   in
     g
       [transform translateXY]
-      ( ( circle [cx "0", cy "0", r "5", fill "#bad4ba"][])
+      ( 
+        ( circle [cx "0", cy "0", r "5", fill "#bad4ba"][] )
         ::
-        (List.map drawLayer children) )
+        (List.map drawLayer children) 
+      )
 
