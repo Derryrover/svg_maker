@@ -1,6 +1,7 @@
 module SvgDisplay exposing (view)
 
-import RoseTree exposing(..)
+--import RoseTree exposing(..)
+import Tree
 import Html exposing (..)
 import Svg exposing (circle, line, svg, g)
 import Svg.Attributes exposing (..)
@@ -12,9 +13,9 @@ view tree = svg [ viewBox "0 0 100 100", width "300px" ] [drawLayer tree]
 drawLayer : SvgTreeBuilder.Model -> Html a
 drawLayer tree =
   let
-    treeItem = (RoseTree.root tree)
+    treeItem = (Tree.label tree)
     svgItem = IdWrapper.getItem treeItem
-    children = RoseTree.children tree
+    children = Tree.children tree
     translateXY = "translate("++ (String.fromInt svgItem.x) ++" "++ (String.fromInt svgItem.y) ++")"
   in
     g

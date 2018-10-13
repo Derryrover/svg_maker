@@ -8,7 +8,7 @@ import Browser exposing(element)
 -- self made modules
 import ElmStyle
 
-import RoseTree
+--import RoseTree
 import IdWrapper
 import SvgElement
 import SvgTreeBuilder
@@ -65,7 +65,7 @@ update msg model =
         ({ model | svgElement = svgElementModel }, Cmd.map SvgElementMsg svgElementMsgOut)
     IdRoseTreeDisplayMsg idRoseTreeDisplayMsg ->
       --(model, Cmd.none)
-      let (res, cmd) = IdRoseTreeUpdate.update SvgElement.update model.svgRoseTree idRoseTreeDisplayMsg
+      let (res, cmd) = IdRoseTreeUpdate.update SvgElement.update idRoseTreeDisplayMsg model.svgRoseTree
       in ({model | svgRoseTree = res}, Cmd.map IdRoseTreeDisplayMsg cmd)
     Noop ->
       (model, Cmd.none)

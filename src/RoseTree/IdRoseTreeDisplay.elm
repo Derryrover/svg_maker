@@ -1,7 +1,8 @@
 module IdRoseTreeDisplay exposing (view, Msg(..))
 
 -- self made modules
-import RoseTree
+--import RoseTree
+import Tree
 import IdWrapper
 import IdRoseTree
 
@@ -29,10 +30,10 @@ init tree = {tree=tree, idHideSelect = Nothing}
 view : ( aModel -> Html aMsg) -> IdRoseTree.Model aModel -> Html (Msg aMsg aModel)
 view itemViewFunction treeModel = 
   let
-    rootWithId = RoseTree.root treeModel
+    rootWithId = Tree.label treeModel
     rootId = IdWrapper.getId rootWithId
     rootItem = IdWrapper.getItem rootWithId
-    children = RoseTree.children treeModel
+    children = Tree.children treeModel
   in
     li 
       []
@@ -44,16 +45,16 @@ view itemViewFunction treeModel =
       ]
 
 
-selectItems = [ "circle", "rect", "ellipse", "line", "polyline", "polygon", "path"]
+-- selectItems = [ "circle", "rect", "ellipse", "line", "polyline", "polygon", "path"]
 
-selectBuilder rootId = 
-  select 
-    [ class "svg_input_general div_new_tree_child_select"
-    , onInput (\n->(New rootId))
-    , id (String.fromInt rootId)
-    ] 
-    (List.concat 
-      [
-        [ option [(value "select new item"), selected True, disabled True, hidden True] [text "select new item"]]
-        , List.map (\item-> option [(value item)] [text item]) selectItems 
-      ])
+-- selectBuilder rootId = 
+--   select 
+--     [ class "svg_input_general div_new_tree_child_select"
+--     , onInput (\n->(New rootId))
+--     , id (String.fromInt rootId)
+--     ] 
+--     (List.concat 
+--       [
+--         [ option [(value "select new item"), selected True, disabled True, hidden True] [text "select new item"]]
+--         , List.map (\item-> option [(value item)] [text item]) selectItems 
+--       ])
