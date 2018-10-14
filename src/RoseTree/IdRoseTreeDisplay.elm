@@ -10,7 +10,7 @@ import Tree
 import Basics exposing (..)
 import List exposing(map)
 import Maybe exposing(..)
-import Html exposing (Html, ul, li, div, text, node, button, select, option)
+import Html exposing (Html, ul, li, div, span, text, node, button, select, option)
 import Html.Attributes exposing (..)
 import Html.Events exposing(onInput)
 
@@ -26,14 +26,20 @@ view itemViewFunction depthCounter treeModel =
     rootId = IdWrapper.getId rootWithId
     rootItem = IdWrapper.getItem rootWithId
     children = Tree.children treeModel
+    listView = 
+      if children == [] then
+        span [] []
+      else 
+        ul listStyleList (List.map (view itemViewFunction (depthCounter+1)) children)
   in
     li 
-      (List.concat [listItemStyleList, [class (oddEvenClass depthCounter)]])
+      (List.concat [listItemStyleList, listItemStyleListEvenOdd depthCounter,  [class (oddEvenClass depthCounter)]])
       [ div 
           [ class "svg_circle_input_whole_item" ] 
           [ Html.map (Direction rootId) (itemViewFunction rootItem) ]
       --, selectBuilder rootId 
-      , ul [] (List.map (view itemViewFunction (depthCounter+1)) children)
+      --, ul listStyleList (List.map (view itemViewFunction (depthCounter+1)) children)
+      , listView
       ]
 
 isEven : Int -> Bool
@@ -48,14 +54,31 @@ oddEvenClass int =
 
 listItemStyleList = ElmStyle.createStyleList 
   [ ("list-style-type", "none") -- no bullets
-  , ("-webkit-margin-before", "0px") -- space above first bullet ? not working ?
-  , ("-webkit-margin-after", "0px") -- space below lst bullet ? not working ?
+  , ("margin", "3px")
+  , ("margin-bottom", "0px")
+  --, ("-webkit-margin-before", "0px") -- space above first bullet ? not working ?
+  --, ("-webkit-margin-after", "0px") -- space below lst bullet ? not working ?
+  , ("padding", "3px")
   ]
 
--- -- /*space above first bullet*/
---     -webkit-margin-before: 0px;
---     /*space below lst bullet*/
---     -webkit-margin-after: 0px;
+listItemStyleListEvenOdd int = 
+  let 
+    color = 
+      if (isEven int) then 
+        "blue"
+      else
+        "green"
+  in 
+    ElmStyle.createStyleList
+      [ ("background-color", color)
+      ]
+
+listStyleList = ElmStyle.createStyleList 
+  [ ("margin-top", "0px") -- space above first bullet
+  , ("margin-bottom", "0px") -- space below lst bullet
+  , ("padding-left", "28px") -- indentation of each layer of new list
+  ]
+
 
 
 -- selectItems = [ "circle", "rect", "ellipse", "line", "polyline", "polygon", "path"]

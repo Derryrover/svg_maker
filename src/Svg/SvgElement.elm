@@ -4,8 +4,11 @@ module SvgElement exposing(Model, Msg, init, update, view, create)
 import Html exposing (Html, div, label, text, input)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import List
 -- packages
 import ParseInt exposing (..)
+-- self made
+import SvgElementCss
 
 -- to start just x and y coordinates
 type alias Model = 
@@ -28,22 +31,31 @@ init x y = (create x y, Cmd.none)
 
 view : Model -> Html Msg
 view model =
+  let
+    inputXAttributes = List.concat 
+      [ SvgElementCss.inputStyleList
+      , [ value (String.fromInt model.x)
+        , onInput (toMsg X) 
+        , class "svg_input_general"
+        ]
+      ]
+    inputYAttributes = List.concat 
+      [ SvgElementCss.inputStyleList
+      , [ value (String.fromInt model.y)
+        , onInput (toMsg Y) 
+        , class "svg_input_general"
+        ]
+      ]
+  in
+  
   div [] 
     [ div []
       [ label [] [text "X →"] 
-      , input
-        [ value (String.fromInt model.x)
-        , onInput (toMsg X) 
-        , class "svg_input_general"
-        ] []
+      , input inputXAttributes []
       ]
     , div [] 
       [ label [] [text "Y ↓"]
-      , input
-        [ value (String.fromInt model.y)
-        , onInput (toMsg Y) 
-        , class "svg_input_general"
-        ] []
+      , input inputYAttributes []
       ]
     ]
 
