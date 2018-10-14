@@ -26,6 +26,20 @@ view itemViewFunction depthCounter treeModel =
     rootId = IdWrapper.getId rootWithId
     rootItem = IdWrapper.getItem rootWithId
     children = Tree.children treeModel
+    listItemAttributes = 
+      if depthCounter == 1 then
+        List.concat 
+          [ listItemStyleList
+          , listItemStyleListEvenOdd depthCounter
+          ,  [class (oddEvenClass depthCounter)]
+          ]
+      else
+        List.concat 
+          [ listItemStyleList
+          , listItemNotRoot
+          , listItemStyleListEvenOdd depthCounter
+          ,  [class (oddEvenClass depthCounter)]
+          ]
     listView = 
       if children == [] then
         span [] []
@@ -33,7 +47,8 @@ view itemViewFunction depthCounter treeModel =
         ul listStyleList (List.map (view itemViewFunction (depthCounter+1)) children)
   in
     li 
-      (List.concat [listItemStyleList, listItemStyleListEvenOdd depthCounter,  [class (oddEvenClass depthCounter)]])
+      listItemAttributes
+      --(List.concat [listItemStyleList, listItemStyleListEvenOdd depthCounter,  [class (oddEvenClass depthCounter)]])
       [ div 
           [ class "svg_circle_input_whole_item" ] 
           [ Html.map (Direction rootId) (itemViewFunction rootItem) ]
@@ -52,22 +67,39 @@ oddEvenClass int =
   else 
     "class_odd"
 
+
+
 listItemStyleList = ElmStyle.createStyleList 
   [ ("list-style-type", "none") -- no bullets
-  , ("margin", "3px")
-  , ("margin-bottom", "0px")
+  , ("padding", "3px")
+  , ("margin", "0px")
+  -- , ("margin", "3px")
+  -- , ("margin-bottom", "0px")
+  -- , ("border-style", "solid")
+  -- , ("border-width", "3px")
+  -- , ("border-color", "white")
   --, ("-webkit-margin-before", "0px") -- space above first bullet ? not working ?
   --, ("-webkit-margin-after", "0px") -- space below lst bullet ? not working ?
-  , ("padding", "3px")
+  ]
+
+listItemNotRoot = ElmStyle.createStyleList 
+  [ ("list-style-type", "none")
+  , ("border-style", "solid")
+  , ("border-width", "3px")
+  , ("border-color", "white")
+  , ("margin", "3px")
+  , ("margin-bottom", "0px")
   ]
 
 listItemStyleListEvenOdd int = 
   let 
     color = 
       if (isEven int) then 
-        "blue"
+        --"blue"
+        "#bad4da"
       else
-        "green"
+        --"green"
+        "#bad4ba"
   in 
     ElmStyle.createStyleList
       [ ("background-color", color)
