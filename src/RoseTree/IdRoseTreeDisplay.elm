@@ -26,19 +26,27 @@ view itemViewFunction depthCounter treeModel =
     rootId = IdWrapper.getId rootWithId
     rootItem = IdWrapper.getItem rootWithId
     children = Tree.children treeModel
+    listItemAttributesGeneral = List.concat 
+      [ listItemStyleList
+      , listItemStyleListEvenOdd depthCounter 
+      , [class (oddEvenClass depthCounter)]
+      ]
     listItemAttributes = 
       if depthCounter == 1 then
         List.concat 
-          [ listItemStyleList
-          , listItemStyleListEvenOdd depthCounter
-          ,  [class (oddEvenClass depthCounter)]
+          [ listItemAttributesGeneral
+          --, listItemStyleList
+          , listItemRoot
+          --, listItemStyleListEvenOdd depthCounter
+          --,  [class (oddEvenClass depthCounter)]
           ]
       else
         List.concat 
-          [ listItemStyleList
+          [ listItemAttributesGeneral
+          --, listItemStyleList
           , listItemNotRoot
-          , listItemStyleListEvenOdd depthCounter
-          ,  [class (oddEvenClass depthCounter)]
+          --, listItemStyleListEvenOdd depthCounter
+          --,  [class (oddEvenClass depthCounter)]
           ]
     listView = 
       if children == [] then
@@ -72,7 +80,7 @@ oddEvenClass int =
 listItemStyleList = ElmStyle.createStyleList 
   [ ("list-style-type", "none") -- no bullets
   , ("padding", "3px")
-  , ("margin", "0px")
+  --, ("margin", "0px")
   -- , ("margin", "3px")
   -- , ("margin-bottom", "0px")
   -- , ("border-style", "solid")
@@ -82,13 +90,21 @@ listItemStyleList = ElmStyle.createStyleList
   --, ("-webkit-margin-after", "0px") -- space below lst bullet ? not working ?
   ]
 
+listItemRoot = ElmStyle.createStyleList 
+  [ ("margin", "0px")
+  , ("height", "100vh")
+  , ("box-sizing", "border-box")
+  ]
+
 listItemNotRoot = ElmStyle.createStyleList 
   [ ("list-style-type", "none")
   , ("border-style", "solid")
   , ("border-width", "3px")
+  --, ("border-color", "black")
   , ("border-color", "white")
   , ("margin", "3px")
   , ("margin-bottom", "0px")
+  , ("margin-right", "0px")
   ]
 
 listItemStyleListEvenOdd int = 
@@ -108,7 +124,7 @@ listItemStyleListEvenOdd int =
 listStyleList = ElmStyle.createStyleList 
   [ ("margin-top", "0px") -- space above first bullet
   , ("margin-bottom", "0px") -- space below lst bullet
-  , ("padding-left", "28px") -- indentation of each layer of new list
+  , ("padding-left", "41px") -- indentation of each layer of new list
   ]
 
 

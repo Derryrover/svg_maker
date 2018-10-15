@@ -50,11 +50,11 @@ view model =
   
   div [] 
     [ div []
-      [ label [] [text "X →"] 
+      [ label SvgElementCss.labelStyleList [text "X →"] 
       , input inputXAttributes []
       ]
     , div [] 
-      [ label [] [text "Y ↓"]
+      [ label SvgElementCss.labelStyleList [text "Y ↓"]
       , input inputYAttributes []
       ]
     ]

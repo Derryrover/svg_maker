@@ -9,3 +9,12 @@ inputStyleList = ElmStyle.createStyleList
   , ("margin", "1px")
   , ("width", "40px")
   ]
+
+labelStyleList = ElmStyle.createStyleList 
+  [ ("width", "40px")
+  , ("display", "block")
+  , ("text-align", "right")
+  , ("clear", "both")
+  , ("float", "left")
+  , ("margin-right", "3px")
+  ]
