@@ -47,7 +47,11 @@ view model =
   div 
     (ElmStyle.createStyleList [("height", "100vh"), ("width", "100%")] ) 
     [ div -- tree view
-        (ElmStyle.createStyleList [("float" , "left"),("display", "inline-block"), ("height", "100vh")] )
+        (ElmStyle.createStyleList 
+          [ ("float" , "left")
+          , ("display", "inline-block")
+          , ("height", "100vh")
+          , ("margin-right", "3px")] )
         [ Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) 1 model.svgRoseTree) ]
     , div --svg view
       (ElmStyle.createStyleList [("float" , "left")]) 

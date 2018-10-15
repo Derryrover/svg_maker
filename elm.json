@@ -4,7 +4,8 @@
         "src",
         "src/RoseTree",
         "src/Svg",
-        "src/ElmStyle"
+        "src/ElmStyle",
+        "src/Utils"
     ],
     "elm-version": "0.19.0",
     "dependencies": {
