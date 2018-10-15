@@ -7,7 +7,8 @@ inputStyleList = ElmStyle.createStyleList
   , ("background-color", "white") 
   , ("border-style", "none")
   , ("margin", "1px")
-  , ("width", "40px")
+  --, ("width", "40px")
+  , ("width", "48px")
   ]
 
 labelStyleList = ElmStyle.createStyleList 

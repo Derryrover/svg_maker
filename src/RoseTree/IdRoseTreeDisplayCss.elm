@@ -15,35 +15,12 @@ oddEvenClass int =
   else 
     "class_odd"
 
-hrLineStyleList int = 
-  if int == 1 then
-    ElmStyle.createStyleList  
-      [("display", "none")]
-  else
-    ElmStyle.createStyleList 
-    [ ("display", "block")
-    , ("height", "1px")
-    , ("border", "0")
-    --, ("border-top", "1px solid #ccc")
-    --, ("border-top", "1px solid #000")
-    , ("border-top", "1px solid grey")
-    --, ("margin", "1em 0")
-    ,  ("margin", "0px")
-    , ("padding", "0")
-    ]
+hrLineStyleList int = ElmStyle.createStyleList [("display", "none")]
 
 
 listItemStyleList = ElmStyle.createStyleList 
   [ ("list-style-type", "none") -- no bullets
   , ("padding", "3px")
-  --, ("margin", "0px")
-  -- , ("margin", "3px")
-  -- , ("margin-bottom", "0px")
-  -- , ("border-style", "solid")
-  -- , ("border-width", "3px")
-  -- , ("border-color", "white")
-  --, ("-webkit-margin-before", "0px") -- space above first bullet ? not working ?
-  --, ("-webkit-margin-after", "0px") -- space below lst bullet ? not working ?
   ]
 
 listItemRoot = ElmStyle.createStyleList 
@@ -53,15 +30,9 @@ listItemRoot = ElmStyle.createStyleList
   ]
 
 listItemNotRoot = ElmStyle.createStyleList 
-  [ ("list-style-type", "none")
-  , ("border-style", "solid")
-  , ("border-width", "0px")
-  --, ("border-width", "1px 0px 0px 0px")
-  --, ("border-width", "3px")
-  --, ("border-top-width", "3px")
-  --, ("border-color", "black")
-  , ("border-color", "grey")
-  --, ("border-color", "white")
+  [ ("border-style", "solid")
+  , ("border-width", "3px")
+  , ("border-color", "white")
   , ("margin", "3px")
   , ("margin-bottom", "0px")
   , ("margin-right", "0px")
@@ -72,9 +43,7 @@ listItemStyleListEvenOdd int =
     color = 
       if (isEven int) then 
         --"blue"
-        --"#bad4da"
-        --"green"
-        "#bad4ba"
+        "#bad4da"
       else
         --"green"
         "#bad4ba"
