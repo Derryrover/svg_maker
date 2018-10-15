@@ -1,10 +1,12 @@
 module IdRoseTreeDisplay exposing (view, Msg(..))
 
 -- self made modules
+--import IdRoseTreeDisplayCssBox exposing
 import IdRoseTreeDisplayCss exposing 
   ( oddEvenClass
   , hrLineStyleList
   , listItemStyleList
+  , listItemDivStyleList
   , listItemRoot
   , listItemNotRoot
   , listItemStyleListEvenOdd
@@ -68,11 +70,16 @@ view itemViewFunction depthCounter treeModel =
       --(List.concat [listItemStyleList, listItemStyleListEvenOdd depthCounter,  [class (oddEvenClass depthCounter)]])
       [ hr (hrLineStyleList depthCounter) [] 
       , div 
-          [ class "svg_circle_input_whole_item" ] 
-          [ Html.map (Direction rootId) (itemViewFunction rootItem) ]
+          ( List.concat
+            [ listItemDivStyleList 
+            , [ class "svg_circle_input_whole_item" ] 
+            ]
+          )
+          [ Html.map (Direction rootId) (itemViewFunction rootItem) 
+          , listView ]
       --, selectBuilder rootId 
       --, ul listStyleList (List.map (view itemViewFunction (depthCounter+1)) children)
-      , listView
+      --, listView
       ]
 
 -- selectItems = [ "circle", "rect", "ellipse", "line", "polyline", "polygon", "path"]
