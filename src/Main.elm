@@ -16,13 +16,10 @@ import IdRoseTreeDisplay
 import IdRoseTreeUpdate
 
 type alias Model = 
-  { svgElement : SvgElement.Model
-  , svgRoseTree : SvgTreeBuilder.Model }
+  { svgRoseTree : SvgTreeBuilder.Model }
 
 type Msg 
-  = SvgElementMsg SvgElement.Msg 
-  | IdRoseTreeDisplayMsg (IdRoseTreeDisplay.Msg SvgElement.Msg SvgElement.Model )
-  | Noop
+  = IdRoseTreeDisplayMsg (IdRoseTreeDisplay.Msg SvgElement.Msg SvgElement.Model )
 
 main = Browser.element
   { init = init
@@ -36,10 +33,10 @@ init _ =
   let
     (svgElementModel , svgElementMsg) = SvgElement.init 1 1
   in
-    ( { svgElement = svgElementModel 
-      , svgRoseTree = SvgTreeBuilder.result
+    ( { svgRoseTree = SvgTreeBuilder.result
       }
-    , Cmd.batch [Cmd.map SvgElementMsg svgElementMsg]
+    --, Cmd.batch [Cmd.map SvgElementMsg svgElementMsg]
+    , Cmd.batch []
     )
 
 view : Model -> Html Msg
@@ -63,18 +60,9 @@ view model =
     ]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model = 
-  case msg of
-    SvgElementMsg svgElementMsgIn ->
-      let
-        (svgElementModel , svgElementMsgOut) = SvgElement.update svgElementMsgIn model.svgElement
-      in
-        ({ model | svgElement = svgElementModel }, Cmd.map SvgElementMsg svgElementMsgOut)
-    IdRoseTreeDisplayMsg idRoseTreeDisplayMsg ->
-      let (res, cmd) = IdRoseTreeUpdate.update SvgElement.update idRoseTreeDisplayMsg model.svgRoseTree
-      in ({model | svgRoseTree = res}, Cmd.map IdRoseTreeDisplayMsg cmd)
-    Noop ->
-      (model, Cmd.none)
+update (IdRoseTreeDisplayMsg idRoseTreeDisplayMsg) model = 
+  let (res, cmd) = IdRoseTreeUpdate.update SvgElement.update idRoseTreeDisplayMsg model.svgRoseTree
+  in ({model | svgRoseTree = res}, Cmd.map IdRoseTreeDisplayMsg cmd)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
