@@ -1,34 +1,43 @@
-module IdRoseTreeDisplayCss exposing (..)
 
--- self made
-import SelfMadeMath exposing(isEven)
-import ElmStyle 
-import IdRoseTreeDisplayCssConstants exposing (listIndent)
+.main_elm 
+.rosetree_view
+{
+  --color1: #bad4ba;
+  --color2: #2e6472;
+  background-color: var(--color1);
+}
 
--- core
-import Html exposing (..)
-import Html.Attributes exposing (..)
+.main_elm 
+.rosetree_view
+hr
+{
+  display: block;
+  height: 0px;
+  border: 0;
+  border-top: 1px solid var(--color2);
+  margin: 0;
+  padding: 0;
+}
 
-oddEvenClass : Int -> String
-oddEvenClass int = 
-  if isEven int then
-    "class_even"
-  else 
-    "class_odd"
 
+
+/*
 hrLineStyleList int = 
   if int == 1 then
     ElmStyle.createStyleList  
       [("display", "none")]
   else
-    ElmStyle.createStyleList []
-    -- [ ("display", "block")
-    -- , ("height", "0px")
-    -- , ("border", "0")
-    -- , ("border-top", "1px solid grey")
-    -- ,  ("margin", "0px")
-    -- , ("padding", "0")
-    -- ]
+    ElmStyle.createStyleList 
+    [ ("display", "block")
+    , ("height", "0px")
+    , ("border", "0")
+    --, ("border-top", "1px solid #ccc")
+    --, ("border-top", "1px solid #000")
+    , ("border-top", "1px solid grey")
+    --, ("margin", "1em 0")
+    ,  ("margin", "0px")
+    , ("padding", "0")
+    ]
 
 
 listItemDivStyleList = ElmStyle.createStyleList
@@ -84,8 +93,7 @@ listItemStyleListEvenOdd int =
         "#bad4ba"
   in 
     ElmStyle.createStyleList
-      [ 
-        --("background-color", color)
+      [ ("background-color", color)
       ]
 
 listStyleList = ElmStyle.createStyleList 
@@ -95,3 +103,4 @@ listStyleList = ElmStyle.createStyleList
   , ("margin-bottom", "0px") -- space below lst bullet
   , ("padding-left", ElmStyle.intToPxString listIndent) -- indentation of each layer of new list
   ]
+  */

@@ -2,7 +2,7 @@ module Main exposing (..)
 
 -- core
 import Html exposing (Html, div, text)
-import Html.Attributes exposing (style)
+import Html.Attributes exposing (style, class)
 import Browser exposing(element)
 
 -- self made modules
@@ -42,13 +42,13 @@ init _ =
 view : Model -> Html Msg
 view model = 
   div 
-    (ElmStyle.createStyleList [("height", "100vh"), ("width", "100%")] ) 
+    (List.concat [[class "main_elm"],(ElmStyle.createStyleList [("height", "100vh"), ("width", "100%")] )]) 
     [ div -- tree view
-        (ElmStyle.createStyleList 
+        (List.concat [ [class "rosetree_view"], (ElmStyle.createStyleList 
           [ ("float" , "left")
           , ("display", "inline-block")
           , ("height", "100vh")
-          , ("margin-right", "3px")] )
+          , ("margin-right", "3px")] )])
         [ Html.map IdRoseTreeDisplayMsg (IdRoseTreeDisplay.view (SvgElement.view) 1 model.svgRoseTree) ]
     , div --svg view
       (ElmStyle.createStyleList [("float" , "left")]) 

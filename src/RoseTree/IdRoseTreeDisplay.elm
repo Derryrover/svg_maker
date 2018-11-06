@@ -46,18 +46,12 @@ view itemViewFunction depthCounter treeModel =
       if depthCounter == 1 then
         List.concat 
           [ listItemAttributesGeneral
-          --, listItemStyleList
           , listItemRoot
-          --, listItemStyleListEvenOdd depthCounter
-          --,  [class (oddEvenClass depthCounter)]
           ]
       else
         List.concat 
           [ listItemAttributesGeneral
-          --, listItemStyleList
           , listItemNotRoot
-          --, listItemStyleListEvenOdd depthCounter
-          --,  [class (oddEvenClass depthCounter)]
           ]
     listView = 
       if children == [] then
@@ -67,7 +61,6 @@ view itemViewFunction depthCounter treeModel =
   in
     li 
       listItemAttributes
-      --(List.concat [listItemStyleList, listItemStyleListEvenOdd depthCounter,  [class (oddEvenClass depthCounter)]])
       [ hr (hrLineStyleList depthCounter) [] 
       , div 
           ( List.concat
@@ -78,8 +71,6 @@ view itemViewFunction depthCounter treeModel =
           [ Html.map (Direction rootId) (itemViewFunction rootItem) 
           , listView ]
       --, selectBuilder rootId 
-      --, ul listStyleList (List.map (view itemViewFunction (depthCounter+1)) children)
-      --, listView
       ]
 
 -- selectItems = [ "circle", "rect", "ellipse", "line", "polyline", "polygon", "path"]
