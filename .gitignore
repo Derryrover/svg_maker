@@ -6,3 +6,9 @@ repl-temp-*
 
 # files created by compiling elm
 dist/main.js
+
+# nodeJS packages
+node_modules/
+
+# sass generated css
+dist/body.css

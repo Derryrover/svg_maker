@@ -1,0 +1,23 @@
+{
+  "name": "svg_maker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "scss": "node-sass --watch scss -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Derryrover/svg_maker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Derryrover/svg_maker/issues"
+  },
+  "homepage": "https://github.com/Derryrover/svg_maker#readme",
+  "dependencies": {
+    "node-sass": "^4.11.0"
+  }
+}
