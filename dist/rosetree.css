@@ -1,0 +1,8 @@
+ol.elm_class.ol_rosetree li.elm_class {
+  background-color: tomato; }
+
+ol.elm_class.ol_rosetree {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 10px; }
