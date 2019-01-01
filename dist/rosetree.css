@@ -1,8 +1,22 @@
-ol.elm_class.ol_rosetree li.elm_class {
-  background-color: tomato; }
+li.elm_class.li_rosetree {
+  background-color: lavender;
+  padding: 4px;
+  padding-right: 0px; }
+
+li.elm_class.li_rosetree.depth_rosetree_1 {
+  padding-right: 4px; }
+
+ol.elm_class.ol_rosetree li.elm_class.li_rosetree {
+  border-style: solid;
+  border-color: darkslategray;
+  border-width: 0;
+  border-top-width: 1px; }
 
 ol.elm_class.ol_rosetree {
   list-style-type: none;
   margin: 0;
   padding: 0;
   margin-left: 10px; }
+
+ol.elm_class.ol_rosetree:not(:empty) {
+  margin-top: 4px; }

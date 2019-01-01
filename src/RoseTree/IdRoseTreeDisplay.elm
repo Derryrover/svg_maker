@@ -44,6 +44,8 @@ getListItemClassNames depth =
   "depth_rosetree_" ++ (String.fromInt depth)
    ++ " li_rosetree "  ++ ElmStyle.elmClass
 
+itemContainerClassNames = "itemcontainer_rosetree " ++ ElmStyle.elmClass
+
 view : ( aModel -> Html aMsg) -> Int -> IdRoseTree.Model aModel -> Html (Msg aMsg aModel)
 view itemViewFunction depth treeModel = 
   let
@@ -54,9 +56,12 @@ view itemViewFunction depth treeModel =
   in
     li 
       [ class (getListItemClassNames depth)]
-        [ Html.map 
-            (Direction rootId) 
-            (itemViewFunction rootItem) 
+        [ div 
+            [class itemContainerClassNames]
+              [ Html.map 
+                (Direction rootId) 
+                (itemViewFunction rootItem)
+              ] 
         , ol 
           [class (getOrderedListClassNames depth)] 
             (List.map (view itemViewFunction (depth+1)) children) 

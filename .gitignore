@@ -12,3 +12,4 @@ node_modules/
 
 # sass generated css
 dist/body.css
+dist/rosetree.css
